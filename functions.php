@@ -54,7 +54,7 @@ function listUsers() {
 }
 
 function addSite($title, $description, $username, $password) {
-	$sql = "INSERT INTO users (username, password, sitename, description) VALUES ('{$username}', '{$password}', '{$title}', '{$description}')";
+	$sql = "INSERT INTO users (username, password, sitename, description) VALUES ('{$username}', MD5('{$password}'), '{$title}', '{$description}')";
 	$result = runSQL($sql);
 	// would be nice to return the new userID here, and have a new user be logged in when they sign up
 }
@@ -90,4 +90,10 @@ function deletePage($pageID) {
 	$sql = "DELETE FROM pages WHERE pageID={$pageID}";
 	$result = runSQL($sql);
 }
-?>
+
+function getUserId($un, $pw) {
+	$sql = "SELECT uid FROM users WHERE username='{$un}' AND password='{$pw}' LIMIT 1";
+	$result = runSQL($sql);
+	$row = $result->fetch_assoc();
+	return $row['uid'];
+}

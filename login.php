@@ -15,20 +15,8 @@
 	if(isset($_POST['un'])) {
 		$un=trim($_POST['un']);
 		$pw=trim($_POST['pw']);
-		$db = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-		if (mysqli_connect_errno()) {
-			echo "Connection failed: ". mysqli_connect_error();
-			exit();
-		}
-		$sql = "SELECT uid FROM users WHERE username='{$un}' AND password='{$pw}' LIMIT 1";
-		
-		if($result = $db->query($sql)) {
-			$row=$result->fetch_assoc();
-			$validID = $row['uid'];
-		} else {
-			echo "query {$sql} failed";
-		}
-		}
+		$validID = getUserId($un, $pw);
+	}
 	$error_msg="";
 	if(isset($validID)) {
 		$session->login($validID);

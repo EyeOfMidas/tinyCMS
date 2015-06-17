@@ -92,7 +92,7 @@ function deletePage($pageID) {
 }
 
 function getUserId($un, $pw) {
-	$sql = "SELECT uid FROM users WHERE username='{$un}' AND password='{$pw}' LIMIT 1";
+	$sql = "SELECT uid FROM users WHERE username='{$un}' AND password=MD5('{$pw}') LIMIT 1";
 	$result = runSQL($sql);
 	$row = $result->fetch_assoc();
 	return $row['uid'];

@@ -1,5 +1,5 @@
 <?php
-require_once("defaultconfig.php");
+require_once(dirname(__FILE__)."/defaultconfig.php");
 
 function runSQL($sql) {
 	$db = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
@@ -10,7 +10,28 @@ function runSQL($sql) {
 	if($result = $db->query($sql)) {
 		return $result;
 	} else {
-		echo "Query: {$sql} failed"; 
+		echo "Query failed: " . $db->error; 
+		exit();
+	}
+	$db->close();
+}
+
+function runMultiSQL($sql) {
+	echo "multisql: " . $sql;
+	$db = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+	if (mysqli_connect_errno()) {
+		echo "Connection failed: ". mysqli_connect_error();
+		exit();
+	}
+	if($result = $db->multi_query($sql)) {
+		$allResults[] = $result;
+		while ($nextResult = $db->next_result()) {
+			$allResults[] = $nextResult;
+		}
+
+		return $allResults;
+	} else {
+		echo "Multi query failed: " . $db->error; 
 		exit();
 	}
 	$db->close();
@@ -19,7 +40,7 @@ function runSQL($sql) {
 function listPages($siteID) {
 	$sql = "SELECT pageID, title FROM pages WHERE userID={$siteID}";
 	return runSQL($sql);
-	
+
 }
 
 function listSites() {

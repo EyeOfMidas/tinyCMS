@@ -11,8 +11,8 @@ function _define($constString, $value) {
 		define($constString, $value);
 	}
 }
-if(file_exists("config.php")) {
-	include("config.php");
+if(file_exists(dirname(__FILE__) ."/config.php")) {
+	include(dirname(__FILE__). "/config.php");
 }
 
 //Default values

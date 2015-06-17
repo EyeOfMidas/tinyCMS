@@ -1,5 +1,5 @@
 <?php
-require_once("config.php");
+require_once("defaultconfig.php");
 
 function runSQL($sql) {
 	$db = new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME);

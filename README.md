@@ -11,3 +11,13 @@ It works, but there are still rough spots, most notably navigation and security 
 7. you are redirected to a login page, login
 8. from here you can add pages or edit your front page
 9. additional users can be added using the register link
+10.
+
+###Example config.php
+```php
+//Database connection settings
+define("DB_SERVER", "localhost");
+define("DB_USER", "tinyCMS");
+define("DB_PASS", "tinycms123");
+define("DB_NAME", "tinyCMS");
+```
